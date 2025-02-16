@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, jsonify
 
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -11,6 +11,7 @@ def home():
 def get_message():
     return jsonify({"message": "Hello from Flask!"})
 
-if name == 'main':
+if __name__ == 'main':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    print(f"Running on http://127.0.0.1:{port}/")  # Add this line
+    app.run(host='127.0.0.1', port=port, debug=True)
