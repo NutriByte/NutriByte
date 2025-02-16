@@ -11,7 +11,7 @@ def home():
 def get_message():
     return jsonify({"message": "Hello from Flask!"})
 
-if __name__ == 'main':
+if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     print(f"Running on http://127.0.0.1:{port}/")  # Add this line
     app.run(host='127.0.0.1', port=port, debug=True)
