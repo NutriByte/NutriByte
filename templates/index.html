@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Webpage</title>
+    <title>NutriByte</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to the Start of NutriByte</h1>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button onclick="location.href='/chatbot'">Chatbot</button>
+        <button onclick="location.href='/team'">Team Page</button>
+    </div>
+
+    <h1>Welcome to NutriByte</h1>
     <p>This is a barebones page.</p>
+
     <button onclick="fetchMessage()">Get Message</button>
     <p id="message"></p>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>
