@@ -1,5 +1,7 @@
 import os
 import openai
+import requests
+from lxml import html
 from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
@@ -91,6 +93,28 @@ def chat():
     except Exception as e:
         print(f"Unexpected Error: {e}")
         return jsonify({"reply": "An unexpected error occurred. Please try again."}), 500
+
+# New endpoint for extracting hyperlinks from a webpage using lxml
+@app.route('/extract-links', methods=['GET'])
+def extract_links():
+    url = request.args.get("url")
+    
+    if not url:
+        return jsonify({"error": "Please provide a valid URL"}), 400
+
+    try:
+        # Fetch the webpage content
+        response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
+        response.raise_for_status()  # Ensure we handle HTTP errors like 404
+
+        # Parse HTML using lxml
+        tree = html.fromstring(response.content)
+        links = tree.xpath('//a/@href')  # Extract all href attributes
+
+        return jsonify({"url": url, "links": links})
+    
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Failed to fetch the page: {e}"}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5002))
