@@ -1,6 +1,8 @@
 import os
 import openai
 from flask import Flask, render_template, request, jsonify
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -91,6 +93,35 @@ def chat():
     except Exception as e:
         print(f"Unexpected Error: {e}")
         return jsonify({"reply": "An unexpected error occurred. Please try again."}), 500
+
+@app.route('/scrape-recipes', methods=['GET'])
+def scrape_recipes():
+    query = request.args.get('query', 'healthy recipes').strip().replace(' ', '+')
+    url = f"https://www.allrecipes.com/search/results/?wt={query}&sort=re"
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Failed to retrieve the web page: {str(e)}"}), 500
+
+    # Parse HTML using BeautifulSoup
+    soup = BeautifulSoup(response.content, 'html.parser')
+    recipe_links = []
+    
+    # Extract recipe titles and URLs
+    for article in soup.find_all('article', class_='fixed-recipe-card'):
+        title_tag = article.find('span', class_='fixed-recipe-card__title-link')
+        link_tag = article.find('a', class_='fixed-recipe-card__title-link')
+        
+        if title_tag and link_tag:
+            recipe_links.append({
+                "title": title_tag.text,
+                "url": link_tag['href']
+            })
+    
+    return jsonify({"recipes": recipe_links})
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5002))
