@@ -113,4 +113,5 @@ webencodings==0.5.1
 websocket-client==1.7.0
 Werkzeug==3.0.3
 maturin>=0.13.0
+gunicorn==21.2.0
 
