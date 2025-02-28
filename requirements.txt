@@ -80,8 +80,8 @@ Pygments==2.17.2
 pymongo==4.6.3
 python-dateutil==2.8.2
 python-json-logger==2.0.7
-#pywin32==306
-pywinpty==2.0.12
+# pywin32==306
+# pywinpty==2.0.12
 PyYAML==6.0.1
 pyzmq==25.1.2
 referencing==0.33.0
@@ -112,3 +112,5 @@ webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.7.0
 Werkzeug==3.0.3
+maturin>=0.13.0
+
