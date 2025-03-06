@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Meal Plan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            {% if session.user %}
+                <span>Welcome, {{ session.user }}!</span>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </nav>
+
+        <h1>Your Generated Meal Plan</h1>
+        <div class="meal-plan-section">
+            <!-- Meal plan will be displayed here -->
+        </div>
+
+        {% if session.user %}
+        <div class="meal-management">
+            <h2>Add Custom Meal</h2>
+            <form id="addMealForm">
+                <select name="type" required>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                </select>
+                <input type="text" name="name" placeholder="Meal name" required>
+                <button type="submit">Add Meal</button>
+            </form>
+
+            <h2>Your Custom Meals</h2>
+            <div id="customMealsList">
+                <!-- Custom meals will be displayed here -->
+            </div>
+        </div>
+        {% endif %}
+
+        <a href="/" class="button">Back to Home</a>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Call displayMealPlan when the page loads
+        window.addEventListener('load', displayMealPlan);
+    </script>
+</body>
+</html> 
