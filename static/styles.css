@@ -37,6 +37,42 @@ button:hover {
     margin: 5px;
 }
 
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: -300px;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: #f4f4f4;
+    padding: 20px;
+    transition: 0.3s;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.close-btn{
+    background: white;
+    color: red;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.sidebar button{
+    display: block;
+    margin: 10px 0;
+}
+
+/* Full-screen expansion */
+.sidebar.fullscreen{
+    width: 100%;
+    left: 0;
+}
+
 /* Chatbot Container */
 #chat-container {
     width: 60%;

@@ -10,8 +10,29 @@
 
     <!-- Navigation Buttons -->
     <div class="nav-buttons">
+        <button onclick="toggleSidebar()">☰</button>
         <button onclick="location.href='/chatbot'">Chatbot</button>
         <button onclick="location.href='/team'">Team Page</button>
+    </div>
+
+    <!--Sidebar for social media aspect-->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+        <h2>Friends</h2>
+        <ul id="friend-list">
+            <!--Replace below with actual users-->
+            <li>Friend 1</li>
+            <li>Friend 2</li>
+            <li>Friend 3</li>
+        </ul>
+
+        <h2>Recent Posts</h2>
+        <div id="post-list">
+            <p><strong>User A:</strong> Shared a recipe!</p>
+            <p><strong>User B:</strong> Uploaded a meal plan.</p>
+        </div>
+
+        <button onclick="expandSidebar()">Expand</button>
     </div>
 
     <h1>Welcome to NutriByte</h1>

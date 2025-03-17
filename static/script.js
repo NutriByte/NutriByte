@@ -152,6 +152,14 @@ function deleteMeal(mealName) {
     .catch(error => console.error('Error deleting meal:', error));
 }
 
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+function expandSidebar() {
+    document.getElementById("sidebar").classList.toggle("fullscreen");
+}
+
 // Add event listeners when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     const addMealForm = document.getElementById('addMealForm');
