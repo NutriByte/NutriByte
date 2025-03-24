@@ -1,0 +1,123 @@
+/* File: static/index.css */
+
+/* Modern Dark-ish Theme for the Main Landing Page */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #eaeaea;
+  }
+  
+  /* Navigation Buttons Container */
+  .nav-buttons {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .nav-buttons button {
+    margin: 0 0.5rem;
+    background-color: #1da1f2;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .nav-buttons button:hover {
+    background-color: #1790d9;
+    transform: scale(1.05);
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 2rem 0 1rem;
+  }
+  
+  .meal-plan-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  
+  .meal-plan-section button {
+    background-color: #1da1f2;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .meal-plan-section button:hover {
+    background-color: #1790d9;
+    transform: scale(1.05);
+  }
+  
+  .recipe-search {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .recipe-search input {
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #1f1f1f;
+    color: #fff;
+  }
+  
+  .recipe-search button {
+    background-color: #1da1f2;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .recipe-search button:hover {
+    background-color: #1790d9;
+    transform: scale(1.05);
+  }
+  
+  .mission {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #1f1f1f;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+  
+  .mission h2 {
+    margin-top: 0;
+    color: #1da1f2;
+  }
+  
+  .mission p {
+    line-height: 1.6;
+  }
+  
+  /* Get Message Button */
+  button[onclick="fetchMessage()"] {
+    margin-top: 2rem;
+    background-color: #1da1f2;
+  }
+  
+  #message {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1rem;
+  }
+  
