@@ -6,7 +6,7 @@ bp = Blueprint('meal_tracker', __name__)
 
 @bp.route('/meal')
 def meal():
-    return render_template('meal.html')
+    return render_template('mealTracker.html')
 
 @bp.route('/api/meals', methods=['GET', 'POST', 'DELETE'])
 def manage_meals():
@@ -63,3 +63,13 @@ def generate_meal_plan():
     except Exception as e:
         print(f"Error generating meal plan: {e}")
         return jsonify({'error': str(e)}), 500
+
+# NEW: API endpoint for food search using your existing food_search.py
+@bp.route('/api/food_search', methods=['GET'])
+def api_food_search():
+    query = request.args.get('query', '')
+    if not query:
+        return jsonify({"products": []})
+    from food_search import search_food  # Import your existing function
+    products = search_food(query)
+    return jsonify({"products": products})

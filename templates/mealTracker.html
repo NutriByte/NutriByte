@@ -4,63 +4,107 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calorie & Meal Tracker</title>
-  <link rel="stylesheet" href="../static/mealTracker.css">
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='mealTracker.css') }}">
 </head>
 <body>
   <header>
     <h1>Calorie & Meal Tracker</h1>
   </header>
   <main>
+    <!-- Overall Daily Summary at the Top -->
+    <div id="daily-summary">
+      <h2>Daily Summary</h2>
+      <p>Total: Calories: 0, Fat: 0, Carbs: 0, Protein: 0, Sodium: 0</p>
+    </div>
+    
     <div class="tracker-container">
+      <!-- Breakfast Section -->
       <div class="meal-section" id="breakfast">
         <h2>Breakfast</h2>
-        <div class="meal-list">
-          <!-- Breakfast items will be injected here -->
-          <div class="meal-item">
-            <span>Oatmeal</span>
-            <span>150 kcal</span>
+        <div class="meal-search">
+          <label for="breakfast-search">Search Food:</label>
+          <div class="search-container">
+            <input type="text" id="breakfast-search" placeholder="Type a food name..." class="food-search-input">
+            <button class="food-search-btn">Search</button>
           </div>
+          <div class="search-results"></div>
         </div>
-        <button class="add-meal">Add Breakfast Item</button>
+        <div class="meal-list">
+          <!-- Logged breakfast items will appear here -->
+        </div>
+        <div class="meal-summary">
+          Total: Calories: 0, Fat: 0, Carbs: 0, Protein: 0, Sodium: 0
+        </div>
       </div>
+      
+      <!-- Lunch Section -->
       <div class="meal-section" id="lunch">
         <h2>Lunch</h2>
-        <div class="meal-list">
-          <!-- Lunch items will be injected here -->
-          <div class="meal-item">
-            <span>Grilled Chicken Salad</span>
-            <span>350 kcal</span>
+        <div class="meal-search">
+          <label for="lunch-search">Search Food:</label>
+          <div class="search-container">
+            <input type="text" id="lunch-search" placeholder="Type a food name..." class="food-search-input">
+            <button class="food-search-btn">Search</button>
           </div>
+          <div class="search-results"></div>
         </div>
-        <button class="add-meal">Add Lunch Item</button>
+        <div class="meal-list">
+          <!-- Logged lunch items will appear here -->
+        </div>
+        <div class="meal-summary">
+          Total: Calories: 0, Fat: 0, Carbs: 0, Protein: 0, Sodium: 0
+        </div>
       </div>
+      
+      <!-- Dinner Section -->
       <div class="meal-section" id="dinner">
         <h2>Dinner</h2>
-        <div class="meal-list">
-          <!-- Dinner items will be injected here -->
-          <div class="meal-item">
-            <span>Steak & Veggies</span>
-            <span>500 kcal</span>
+        <div class="meal-search">
+          <label for="dinner-search">Search Food:</label>
+          <div class="search-container">
+            <input type="text" id="dinner-search" placeholder="Type a food name..." class="food-search-input">
+            <button class="food-search-btn">Search</button>
           </div>
+          <div class="search-results"></div>
         </div>
-        <button class="add-meal">Add Dinner Item</button>
+        <div class="meal-list">
+          <!-- Logged dinner items will appear here -->
+        </div>
+        <div class="meal-summary">
+          Total: Calories: 0, Fat: 0, Carbs: 0, Protein: 0, Sodium: 0
+        </div>
       </div>
+      
+      <!-- Snacks Section -->
       <div class="meal-section" id="snacks">
         <h2>Snacks</h2>
-        <div class="meal-list">
-          <!-- Snack items will be injected here -->
-          <div class="meal-item">
-            <span>Apple</span>
-            <span>95 kcal</span>
+        <div class="meal-search">
+          <label for="snacks-search">Search Food:</label>
+          <div class="search-container">
+            <input type="text" id="snacks-search" placeholder="Type a food name..." class="food-search-input">
+            <button class="food-search-btn">Search</button>
           </div>
+          <div class="search-results"></div>
         </div>
-        <button class="add-meal">Add Snack Item</button>
+        <div class="meal-list">
+          <!-- Logged snack items will appear here -->
+        </div>
+        <div class="meal-summary">
+          Total: Calories: 0, Fat: 0, Carbs: 0, Protein: 0, Sodium: 0
+        </div>
       </div>
     </div>
+    
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <small>*Disclaimer: Nutritional values are provided per 100g and may not reflect typical US serving sizes. Please adjust accordingly.</small>
+    </div>
+    
   </main>
   <footer>
     <p>&copy; 2025 NutriByte</p>
   </footer>
+  
+  <script src="{{ url_for('static', filename='mealTracker.js') }}"></script>
 </body>
 </html>
