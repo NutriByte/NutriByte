@@ -1,0 +1,44 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Trigger the CI/CD pipeline on pushing to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 2: Set up SSH to connect to EC2
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+    # Step 3: Install dependencies (Python, pip, etc.)
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    # Step 4: Install the required dependencies (like Flask, Django, etc.)
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # assuming you have a requirements.txt file
+
+    # Step 5: Deploy the application to EC2
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+          cd /home/ec2-user/nutri-byte  # Navigate to the app directory on your EC2
+          git pull origin main  # Pull the latest changes from GitHub
+          source /home/ec2-user/nutri-byte/myenv/bin/activate  # Activate your virtual environment if any
+          pip install -r requirements.txt  # Install any new dependencies
+          sudo systemctl restart your-service-name  # Restart the service (e.g., Gunicorn or Flask)
+        EOF
