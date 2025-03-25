@@ -3,30 +3,27 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # Trigger deployment when pushing to the main branch
+      - main  # change this to whatever branch you want to trigger deploy
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the code from GitHub
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    # Step 2: Set up SSH to EC2
     - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  # Store the EC2 private key in GitHub Secrets
-
-    # Step 3: Deploy to EC2
-    - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
-          cd /var/www/myapp  # Change to your app's directory on EC2
-          git pull origin main  # Pull the latest code from GitHub
-          source /var/www/myapp/myenv/bin/activate  # Activate the virtual environment (if you're using one)
-          pip install -r requirements.txt  # Install any new dependencies
-          sudo systemctl restart gunicorn  # Restart Gunicorn or your app server
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+    - name: SSH into EC2 and deploy
+      run: |
+        ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+        cd ${{ secrets.DEPLOY_PATH }}
+        git pull origin main
+        ./deploy.sh  # optional: your custom script to build/start the app
         EOF
