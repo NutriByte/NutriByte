@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar Test</title>
+    <style>
+        /* Sidebar CSS */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: #f4f4f4;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar.fullscreen {
+            width: 100%;
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            background-color: #e9ecef;
+        }
+        .sidebar-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .sidebar-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #e9ecef;
+        }
+        .close-btn, .expand-btn, .create-post-btn {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="toggleSidebar()">Toggle Sidebar</button>
+
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <button class="close-btn" onclick="closeSidebar()">✖</button>
+        </div>
+        <div class="sidebar-content">
+            <h2>Friends</h2>
+            <ul>
+                <li>Friend 1</li>
+                <li>Friend 2</li>
+                <li>Friend 3</li>
+            </ul>
+            <h2>Posts</h2>
+            <div>
+                <p>User A posted something!</p>
+                <p>User B posted something!</p>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <button class="create-post-btn" onclick="openCreatePostModal()">Create Post</button>
+            <button class="expand-btn" onclick="expandSidebar()">Expand</button>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('active');
+        }
+    </script>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('active');
+            sidebar.classList.remove('fullscreen');
+        }
+
+        function expandSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('fullscreen');
+        }
+
+        function openCreatePostModal() {
+            alert("This would open the Create Post modal!");
+        }
+    </script>
+
+
+</body>
+</html>

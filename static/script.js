@@ -153,12 +153,132 @@ function deleteMeal(mealName) {
 }
 
 function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("sidebar").classList.toggle("active");
 }
 
 function expandSidebar() {
     document.getElementById("sidebar").classList.toggle("fullscreen");
 }
+
+function closeSidebar(){
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('active');
+    sidebar.classList.remove('fullscreen');
+}
+
+function openCreatePostModal(){
+    console.log("Opening Create Post Modal...")
+    var modal = document.getElementById("createPostModal");
+    modal.classList.add("active");
+}
+
+function closeCreatePostModal(){
+    document.getElementById("createPostModal").classList.remove("active");
+}
+
+sidebarCloseBtn.addEventListener('click', function(){
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('active');
+})
+
+var createPostButton = document.getElementById("create-post-btn");
+
+var closeModalButton = document.querySelector(".close-modal");
+
+//When the user clicks the Create Post button, open the modal
+createPostButton.onClick = function() {
+    modal.style.display = "block";
+}
+
+//When the user clicks on (x), close the modal
+closeModalButton.onclick = function() {
+    modal.style.display = "none";
+}
+
+document.getElementById("createPostForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const text = document.getElementById("post-text").value;
+    const image = document.getElementById("post-image").files[0];
+  
+    // For now just alert. You can later connect this to backend with FormData.
+    alert("Post created:\nText: " + text + (image ? `\nImage: ${image.name}` : ""));
+  
+    closeCreatePostModal();
+});
+
+//When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event){
+    if(event.target == modal){
+        modal.style.display = "none";
+    }
+}
+
+function loadFriends(){
+    fetch('/api/friends')
+    .then(response => response.json())
+    .then(data => {
+        const friendList = document.getElementById('friend-list');
+        friendList.innerHTML = '';
+        const friends = data.friends || [];
+        if(friends.length === 0){
+            friendList.innerHTML = "<li>You have no friends yet.</li>";
+        } else {
+            friends.forEach(friend => {
+                const li = document.createElement('li');
+                li.textContent = friend.name;
+                friendList.appendChild(li);
+            });
+        }    
+    });
+}
+
+function loadPosts(){
+    fetch('/api/posts')
+    .then(response => response.json())
+    .then(posts => {
+        const postList = document.getElementById('post-list');
+        postList.innerHTML = '';
+        if (!posts || posts.length === 0){
+            postList.innerHTML = "<p>No posts available yet.</p>";
+            return;
+        } else {
+            posts.forEach(post =>{
+                const p = document.createElement('p');
+                p.innerHTML = `<strong>${post.username}:</strong> ${post.content}`;
+                postList.appendChild(p);
+            });
+        }
+    })
+    .catch (error => {
+        console.error("Failed to load posts:", error);
+    });
+}
+
+function addFriend() {
+    const friendName = document.getElementById("new-friend-name").value.trim();
+    const username = "currentUser";  // Replace this with your actual logged-in username
+
+    if (!friendName) {
+        alert("Please enter a friend's name.");
+        return;
+    }
+
+    fetch("/social/friends", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username, friend: friendName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        document.getElementById("new-friend-name").value = ""; // clear input
+        loadFriends(username); // optionally refresh the list
+    })
+    .catch(err => {
+        console.error("Error adding friend:", err);
+    });
+}
+
 
 // Add event listeners when the page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -167,4 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
         addMealForm.addEventListener('submit', addMeal);
         loadCustomMeals();
     }
+    loadFriends();
+    loadPosts();
 });

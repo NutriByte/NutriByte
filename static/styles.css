@@ -45,15 +45,57 @@ button:hover {
     width: 300px;
     height: 100%;
     background: #f4f4f4;
-    padding: 20px;
-    transition: 0.3s;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: left 0.3s ease;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
 }
 
-.sidebar.open {
+.sidebar.active {
     left: 0;
 }
 
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #e9ecef;
+    flex-shrink: 0;
+}
+
+.add-friend-section {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-friend-section input {
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add-friend-section button {
+    padding: 6px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-friend-section button:hover {
+    background-color: #218838;
+}
+
+/* Button to close sidebar*/
 .close-btn{
     background: white;
     color: red;
@@ -62,15 +104,145 @@ button:hover {
     cursor: pointer;
 }
 
-.sidebar button{
+/* Provides a hover effect to close button*/
+.close-btn:hover {
+    background: palevioletred;
+}
+
+.sidebar-content{
+    overflow-y: auto;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    flex-shrink: 0;
+    background-color:#e9ecef;
+}
+
+.sidebar-footer button{
+    border: none;
+    margin: 0 5px;
+}
+
+/* Button to create posts*/
+.create-post-btn {
+    background-color: #1aa37c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Provides a hover effect to the create post button*/
+.create-post-btn:hover {
+    background-color: #20ecb2;
+}
+
+/* Button to expand the sidebar to fullscreen*/
+#expand-sidebar-btn{
     display: block;
     margin: 10px 0;
+    color: gray;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Provides a hover effect to the expand sidebar button*/
+#expand-sidebar-btn:hover {
+    color:#a7b6c6;
 }
 
 /* Full-screen expansion */
 .sidebar.fullscreen{
     width: 100%;
     left: 0;
+}
+
+/* The modal background */
+.modal {
+    display: none; /* Hidden by default*/
+    position: fixed;
+    z-index: 2000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.active {
+    display: block;
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    align-items: center;
+}
+
+/*Close button "X" */
+.close-modal{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #b50101;
+    cursor: pointer;
+}
+
+/* Hover effect for close button */
+.close-modal:hover {
+    color:#f70808;
+}
+
+/* Textarea for post text */
+#post-text {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize:none;
+}
+
+/* File input styling */
+#post-image {
+    margin-bottom: 15px;
+}
+
+/* Submit button */
+#createPostForm button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Hover effect for post button */
+#createPostForm button:hover {
+    background-color: #0056b3;
 }
 
 /* Chatbot Container */

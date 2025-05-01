@@ -17,22 +17,33 @@
 
     <!--Sidebar for social media aspect-->
     <div id="sidebar" class="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">✖</button>
-        <h2>Friends</h2>
-        <ul id="friend-list">
-            <!--Replace below with actual users-->
-            <li>Friend 1</li>
-            <li>Friend 2</li>
-            <li>Friend 3</li>
-        </ul>
 
-        <h2>Recent Posts</h2>
-        <div id="post-list">
-            <p><strong>User A:</strong> Shared a recipe!</p>
-            <p><strong>User B:</strong> Uploaded a meal plan.</p>
-        </div>
+        <!-- Close button at the top-->
+         <div class="sidebar-header">
+            <button class="close-btn" onclick="closeSidebar()">✖</button>
+         </div>
+        
+         <div class="sidebar-content">
+            <h2>Friends</h2>
+            <ul id="friend-list"></ul>
 
-        <button onclick="expandSidebar()">Expand</button>
+            <!-- Add Friend Input & Button-->
+            <div class="add-friend-section">
+                <input type="text" id="new-friend-name" placeholder="Enter friend's name" />
+                <button onclick="addFriend()">Add Friend</button>
+            </div> 
+
+            <h2>Recent Posts</h2>
+            <div id="post-list">
+                
+            </div>
+         </div>
+
+        <!-- Bottom Buttons-->
+         <div class="sidebar-footer">
+            <button class="create-post-btn" onclick="openCreatePostModal()"> + Create Post</button>
+            <button class="expand-sidebar-btn" onclick="expandSidebar()">Expand</button>
+         </div>
     </div>
 
     <h1>Welcome to NutriByte</h1>
@@ -61,6 +72,71 @@
     <p id="message"></p>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- Create Post Modal -->
+     <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCreatePostModal()">&times;</span>
+            <h2>Create a Post</h2>
+            <form id="createPostForm" enctype="multipart/form-data">
+                <textarea id="post-text" placeholder="What's on your mind?" rows="4" required></textarea>
+                <input type="file" id="post-image" accept="image/*">
+                <button type="submit">Post</button> 
+            </form>
+        </div>
+     </div>
+
+     <script>
+        async function loadSidebarContent(username) {
+            const friendList = document.getElementById('friend-list');
+            const postList = document.getElementById('post-list');
+        
+            friendList.innerHTML = '<li>Loading...</li>';
+            postList.innerHTML = '<p>Loading posts...</p>';
+        
+            try {
+                const [friendsRes, postsRes] = await Promise.all([
+                    fetch(`/api/friends/${username}`),
+                    fetch(`/api/posts/${username}`)
+                ]);
+        
+                const friends = await friendsRes.json();
+                const posts = await postsRes.json();
+        
+                // Friends
+                friendList.innerHTML = '';
+                if (friends.length === 0) {
+                    friendList.innerHTML = '<li>No friends yet.</li>';
+                } else {
+                    friends.forEach(friend => {
+                        const li = document.createElement('li');
+                        li.textContent = friend.username;
+                        friendList.appendChild(li);
+                    });
+                }
+        
+                // Posts
+                postList.innerHTML = '';
+                if (posts.length === 0) {
+                    postList.innerHTML = '<p>No recent posts.</p>';
+                } else {
+                    posts.forEach(post => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<strong>${post.author}:</strong> ${post.text}`;
+                        postList.appendChild(p);
+                    });
+                }
+            } catch (err) {
+                friendList.innerHTML = '<li>Error loading friends</li>';
+                postList.innerHTML = '<p>Error loading posts</p>';
+                console.error(err);
+            }
+        }
+        </script>
+
+<script src="/static/script.js" defer></script>
+
+        
 
 </body>
 </html>
